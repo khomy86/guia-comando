@@ -7,8 +7,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "vercel-build": "bun nuxt build"
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",

@@ -1,7 +1,0 @@
-{
-  "buildCommand": "bun run vercel-build",
-  "framework": "nuxt",
-  "installCommand": "bun install",
-  "outputDirectory": ".output/public",
-  "devCommand": "bun run dev"
-} 

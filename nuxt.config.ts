@@ -28,9 +28,9 @@ export default defineNuxtConfig({
       title: 'Guia de Comando'
     }
   },
-  // Enable Nitro server with Vercel preset
+  // Enable Nitro server
   nitro: {
-    preset: 'vercel'
+    preset: 'node-server'
   },
   // Runtime config for API keys
   runtimeConfig: {

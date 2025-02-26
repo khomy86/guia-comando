@@ -267,19 +267,13 @@ export default defineEventHandler(async (event) => {
       }
       
       // Create a temporary file to store the Excel buffer
-      // Use /tmp directory for Vercel compatibility
+      // Use /tmp directory for Vercel compatibility or os.tmpdir()
       const tempDir = process.env.VERCEL ? '/tmp' : os.tmpdir()
-      const tempFileName = `report-${Date.now()}.xlsx`
-      const tempExcelPath = join(tempDir, tempFileName)
+      const tempExcelPath = join(tempDir, `report-${Date.now()}.xlsx`)
       
       // Write the Excel buffer to a temporary file
-      try {
-        await fs.promises.writeFile(tempExcelPath, Buffer.from(excelBuffer))
-        console.log(`Excel file temporarily written to: ${tempExcelPath}`)
-      } catch (writeError) {
-        console.error('Error writing temporary file:', writeError)
-        throw writeError
-      }
+      await fs.promises.writeFile(tempExcelPath, Buffer.from(excelBuffer))
+      console.log(`Excel file temporarily written to: ${tempExcelPath}`)
       
       // Verify the file exists
       if (!fs.existsSync(tempExcelPath)) {
