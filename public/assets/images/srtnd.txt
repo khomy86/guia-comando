@@ -1,0 +1,2 @@
+This is a placeholder for the SRTND logo image.
+In a real application, you would create an actual image file. 
