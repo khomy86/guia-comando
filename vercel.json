@@ -1,0 +1,14 @@
+{
+  "buildCommand": "bun run vercel-build",
+  "outputDirectory": ".output/public",
+  "framework": "nuxt",
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    }
+  ],
+  "env": {
+    "CLOUDMERSIVE_API_KEY": "@cloudmersive_api_key"
+  }
+} 
