@@ -28,9 +28,12 @@ export default defineNuxtConfig({
       title: 'Guia de Comando'
     }
   },
+  // Enable server-side rendering
+  ssr: true,
   // Enable Nitro server
   nitro: {
-    preset: 'node-server'
+    preset: 'vercel',
+    serveStatic: true
   },
   // Runtime config for API keys
   runtimeConfig: {
