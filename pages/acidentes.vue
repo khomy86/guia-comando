@@ -667,10 +667,10 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 import { useAcidentesForm } from '~/composables/useAcidentesForm';
 
-// Use the acidentes form composable
+// Use the acidentes form composable with destructuring for better performance
 const { 
   formData, 
   hrPositPlaceholder, 
@@ -680,10 +680,37 @@ const {
   initializeForm
 } = useAcidentesForm();
 
-// Initialize form on component mount
+// Initialize form on component mount and add cleanup on unmount
 onMounted(() => {
   initializeForm();
+  
+  // Add event listener for beforeunload to prevent accidental navigation
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
+
+// Clean up event listeners on component unmount
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+// Prevent accidental navigation away from form
+const handleBeforeUnload = (e) => {
+  // Check if form has data
+  const hasData = Object.values(formData.value).some(section => {
+    if (typeof section === 'object') {
+      return Object.values(section).some(value => 
+        value !== '' && value !== false && value !== null && value !== undefined
+      );
+    }
+    return section !== '' && section !== false && section !== null && section !== undefined;
+  });
+  
+  if (hasData) {
+    e.preventDefault();
+    e.returnValue = '';
+    return '';
+  }
+};
 </script>
 
 <style scoped>
