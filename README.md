@@ -1,31 +1,36 @@
 # Guia de Comando
 
-Digital version of the firefighters' "Guia de Comando – Acidentes" paper form
-(Ponto de Situação Inicial / Reconhecimento). The form is filled in on a phone or
-desktop, and **Gerar Relatório** produces the official sheet as a PDF.
+Versão digital do impresso "Guia de Comando – Acidentes" (Ponto de Situação Inicial /
+Reconhecimento) usado pelos bombeiros. O formulário é preenchido no telemóvel ou no
+computador e o botão **Gerar Relatório** produz a folha oficial em PDF.
 
-Built with [Nuxt 4](https://nuxt.com) + Bootstrap 5, deployed on Vercel.
+Feito com [Nuxt 4](https://nuxt.com) e Bootstrap 5, alojado na Vercel.
 
-## How it works
+## Como funciona
 
-- `app/pages/acidentes.vue` – the form, laid out like the paper version
-- `app/composables/useAcidentesForm.ts` – form state, GPS location + reverse geocoding (OpenStreetMap Nominatim), report download
-- `shared/` – form types and the empty-form factory, used by both the page and the API
-- `server/api/report.post.ts` – `POST /api/report`: fills `server/assets/gca.xlsx` with the form data
-  (cell map in `server/utils/report.ts`) and converts it to PDF with Cloudmersive.
-  If the conversion isn't available it returns the `.xlsx` instead.
+- `app/pages/acidentes.vue` – o formulário, com a mesma disposição do impresso em papel
+- `app/composables/useAcidentesForm.ts` – estado do formulário, localização GPS com obtenção da morada (OpenStreetMap Nominatim) e descarga do relatório
+- `shared/` – tipos e formulário vazio, partilhados entre a página e a API
+- `server/api/report.post.ts` – `POST /api/report`: preenche o modelo `server/assets/gca.xlsx` com os dados do formulário
+  (mapa de células em `server/utils/report.ts`) e converte-o para PDF.
 
-## Environment
+### Conversão para PDF
 
-| Variable | Purpose |
+A conversão de Excel para PDF é feita pela API da [Cloudmersive](https://cloudmersive.com), que exige uma chave de API.
+O plano gratuito tem um limite mensal de conversões; para um volume maior é necessária uma chave de um plano pago.
+Sem chave, ou se a conversão falhar (por exemplo, por limite atingido), o relatório é descarregado em formato `.xlsx`.
+
+## Variáveis de ambiente
+
+| Variável | Finalidade |
 | --- | --- |
-| `CLOUDMERSIVE_API_KEY` (or `NUXT_CLOUDMERSIVE_API_KEY`) | Cloudmersive API key for Excel → PDF. Without it, reports download as `.xlsx`. |
+| `CLOUDMERSIVE_API_KEY` (ou `NUXT_CLOUDMERSIVE_API_KEY`) | Chave da API Cloudmersive para a conversão Excel → PDF. Sem ela, os relatórios são descarregados em `.xlsx`. |
 
-## Development
+## Desenvolvimento
 
 ```bash
 bun install
 bun run dev         # http://localhost:3000
 bun run typecheck
-bun run build       # Vercel preset is picked automatically when building on Vercel
+bun run build       # na Vercel, o preset da Vercel é detetado automaticamente
 ```
