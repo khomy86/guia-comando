@@ -20,10 +20,6 @@
   </div>
 </template>
 
-<script setup>
-// Main page component
-</script>
-
 <style scoped>
 .btn {
   padding: 15px;
